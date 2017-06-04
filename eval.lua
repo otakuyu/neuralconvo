@@ -61,6 +61,24 @@ function say(text)
   end
 end
 
+function returnSay(text)
+  local wordIds = {}
+
+  for t, word in tokenizer.tokenize(text) do
+    local id = dataset.word2id[word:lower()] or dataset.unknownToken
+    table.insert(wordIds, id)
+  end
+
+  local input = torch.Tensor(list.reverse(wordIds))
+  local wordIds, probabilities = model:eval(input)
+
+  if options.debug then
+    printProbabilityTable(wordIds, probabilities, 4)
+  end
+
+  return pred2sent(wordIds)
+end
+
 print("\nType a sentence and hit enter to submit.")
 print("CTRL+C then enter to quit.\n")
 while true do
@@ -68,3 +86,5 @@ while true do
   io.flush()
   io.write(say(io.read()))
 end
+
+return returnSay
