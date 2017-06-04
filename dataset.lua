@@ -14,6 +14,7 @@ local DataSet = torch.class("neuralconvo.DataSet")
 local xlua = require "xlua"
 local tokenizer = require "tokenizer"
 local list = require "pl.List"
+local path = require 'pl.path'
 
 function DataSet:__init(loader, options)
   options = options or {}
