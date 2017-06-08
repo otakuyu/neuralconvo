@@ -2,9 +2,30 @@ require 'neuralconvo'
 require 'xlua'
 require 'optim'
 
+-- load the JSON library.
+local Json = require("json")
+
+local JsonStorage = {}
+
+-- Function to save a table.&nbsp; Since game settings need to be saved from session to session, we will
+-- use the Documents Directory
+JsonStorage.saveTable = function(t, filename)
+    -- local path = system.pathForFile( filename, system.DocumentsDirectory)
+    local file = io.open(filename, "w")
+
+    if file then
+        local contents = Json.encode(t)
+        file:write( contents )
+        io.close( file )
+        return true
+    else
+        return false
+    end
+end
+
 function train()
     options = {}
-    options.dataset = 5000
+    options.dataset = 500
     options.hiddenSize = 100
     options.maxEpoch = 2
 
@@ -171,6 +192,11 @@ function train()
 
         optimState.learningRate = optimState.learningRate + decayFactor
         optimState.learningRate = math.max(options.minLR, optimState.learningRate)
+
+        -- save to file
+        local progress = {}
+        progress['progress'] = epoch / options.maxEpoch
+        JsonStorage.saveTable(progress, "progress.json")
     end
 end
 
