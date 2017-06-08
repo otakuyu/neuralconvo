@@ -24,6 +24,9 @@ JsonStorage.saveTable = function(t, filename)
 end
 
 function train()
+    local progress = {}
+    progress['progress'] = 0
+    JsonStorage.saveTable(progress, "progress.json")
     options = {}
     options.dataset = 500
     options.hiddenSize = 100
@@ -194,7 +197,7 @@ function train()
         optimState.learningRate = math.max(options.minLR, optimState.learningRate)
 
         -- save to file
-        local progress = {}
+
         progress['progress'] = epoch / options.maxEpoch
         JsonStorage.saveTable(progress, "progress.json")
     end
