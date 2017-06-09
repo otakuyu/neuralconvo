@@ -198,7 +198,7 @@ function train()
 
         -- save to file
 
-        progress['progress'] = epoch / options.maxEpoch
+        progress['progress'] = epoch / (options.maxEpoch + 1)
         JsonStorage.saveTable(progress, "progress.json")
     end
 end
