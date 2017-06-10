@@ -5,13 +5,13 @@ import tornado.web
 class MainHandler(tornado.web.RequestHandler):
     def post(self):
         data = tornado.escape.json_decode(self.request.body)
-        self.write(returnSay(data["message"]))
+        self.write(say(data["message"]))
 
     def get(self):
         self.write("Brain!")
 
 if __name__ == "__main__":
-    returnSay = require("eval")
+    say = require("evaler")
     application = tornado.web.Application([
         (r"/", MainHandler),
     ])
