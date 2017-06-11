@@ -28,9 +28,9 @@ function train()
     progress['progress'] = 0
     JsonStorage.saveTable(progress, "progress.json")
     options = {}
-    options.dataset = 500
-    options.hiddenSize = 100
-    options.maxEpoch = 2
+    options.dataset = 100
+    options.hiddenSize = 50
+    options.maxEpoch = 50
 
     options.maxVocabSize = 0
     options.cuda = false
